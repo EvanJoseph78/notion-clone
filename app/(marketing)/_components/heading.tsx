@@ -1,9 +1,14 @@
 "use client";
 
+import { Spinner } from "@/components/spinner";
 import { Button } from "@/components/ui/button";
+import { SignInButton } from "@clerk/clerk-react";
+import { useConvexAuth } from "convex/react";
 import { ArrowRight } from "lucide-react";
+import Link from "next/link";
 
 export const Heading = () => {
+  const { isAuthenticated, isLoading } = useConvexAuth();
   return (
     <div className="max-w-3xl space-y-4">
       <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold">
@@ -15,7 +20,32 @@ export const Heading = () => {
         Emerald está disponível de qualquer lugar! <br /> Rápido e seguro!
       </h3>
 
-      <Button variant="emerald">Entre agora <ArrowRight className="h-4 w-4 ml-2"></ArrowRight></Button>
+      {isLoading && (
+        <div className="w-full flex items-center justify-center">
+          <Spinner size="lg" />
+        </div>
+      )}
+
+      {isAuthenticated && !isLoading && (
+        <Button variant="emerald">
+          <Link href="/documents">
+            Entrar
+          </Link>
+          <ArrowRight className="h-4 w-4 ml-2"></ArrowRight>
+        </Button>
+      )}
+
+      {!isAuthenticated && !isLoading && (
+        <SignInButton mode="modal">
+          <Button variant="emerald">
+            Criar conta grátis
+            <ArrowRight className="h-4 w-4 ml-2"></ArrowRight>
+          </Button>
+        </SignInButton>
+
+      )}
+
+      {/* <Button variant="emerald">Entre agora <ArrowRight className="h-4 w-4 ml-2"></ArrowRight></Button> */}
     </div>
   )
 }
