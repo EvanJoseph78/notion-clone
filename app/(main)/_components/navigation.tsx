@@ -1,11 +1,22 @@
 "use client"
 
 import { cn } from "@/lib/utils";
-import { ChevronsLeft, MenuIcon } from "lucide-react";
+import {
+  ChevronsLeft,
+  MenuIcon,
+  PlusCircle,
+  Search,
+  Settings
+} from "lucide-react";
+
 import { usePathname } from "next/navigation";
 import { ElementRef, useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "usehooks-ts";
 import { UserItem } from "./user-item";
+import { useMutation, useQuery } from "convex/react";
+import { api } from "@/convex/_generated/api";
+import { Item } from "./item";
+import { toast } from "sonner";
 
 export const Navigation = () => {
   const pathname = usePathname();
@@ -16,6 +27,9 @@ export const Navigation = () => {
   const navbarRef = useRef<ElementRef<"div">>(null);
   const [isResetting, setIsReseting] = useState(false);
   const [isCollapsed, setIsCollapsed] = useState(isMobile);
+
+  const documents = useQuery(api.documents.get);
+  const create = useMutation(api.documents.create);
 
   useEffect(() => {
     if (isMobile) {
@@ -94,6 +108,17 @@ export const Navigation = () => {
 
   }
 
+  const handleCreate = () => {
+    const promise = create({ title: "Sem titulo" });
+
+    toast.promise(promise, {
+      loading: "Criando nova nota...",
+      success: "Nova nota criada!",
+      error: "Falha ao criar nova nota."
+    });
+
+  };
+
   return (
     <>
       <aside
@@ -119,10 +144,34 @@ export const Navigation = () => {
 
         <div>
           <UserItem></UserItem>
+
+          <Item
+            label="Busca"
+            icon={Search}
+            isSearch
+            onClick={() => { }}
+          ></Item>
+
+          <Item
+            label="Ajustes"
+            icon={Settings}
+            onClick={() => { }}
+          ></Item>
+
+          <Item
+            onClick={handleCreate}
+            label="Nova Página"
+            icon={PlusCircle}>
+          </Item>
+
         </div>
 
         <div className="mt-4">
-          <p>Documents</p>
+          {documents?.map((document) => {
+            return (
+              <p key={document._id}>{document.title}</p>
+            )
+          })}
         </div>
 
         <div

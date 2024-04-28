@@ -16,7 +16,7 @@ export const Heading = () => {
           Emerald</span>
       </h1>
 
-      <h3 className="text-base sm:text-xl md:text-2xl font-medium">
+      <h3 className="text-base sm:text-xl md:text-2xl font-medium pb-4">
         Emerald está disponível de qualquer lugar! <br /> Rápido e seguro!
       </h3>
 
@@ -27,12 +27,12 @@ export const Heading = () => {
       )}
 
       {isAuthenticated && !isLoading && (
-        <Button variant="emerald">
-          <Link href="/documents">
+        <Link href="/documents">
+          <Button variant="emerald">
             Entrar
-          </Link>
-          <ArrowRight className="h-4 w-4 ml-2"></ArrowRight>
-        </Button>
+            <ArrowRight className="h-4 w-4 ml-2"></ArrowRight>
+          </Button>
+        </Link>
       )}
 
       {!isAuthenticated && !isLoading && (
@@ -42,7 +42,6 @@ export const Heading = () => {
             <ArrowRight className="h-4 w-4 ml-2"></ArrowRight>
           </Button>
         </SignInButton>
-
       )}
 
       {/* <Button variant="emerald">Entre agora <ArrowRight className="h-4 w-4 ml-2"></ArrowRight></Button> */}
