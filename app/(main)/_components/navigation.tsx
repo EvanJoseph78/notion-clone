@@ -28,7 +28,10 @@ import { toast } from "sonner";
 import { DocumentLit } from "./document-list";
 import { TrashBox } from "./trash-box";
 
+import { useSearch } from "@/hooks/use-search";
+
 export const Navigation = () => {
+  const search = useSearch();
   const pathname = usePathname();
   const isMobile = useMediaQuery("(max-width: 768px)");
 
@@ -158,7 +161,7 @@ export const Navigation = () => {
             label="Busca"
             icon={Search}
             isSearch
-            onClick={() => { }}
+            onClick={search.onOpen}
           ></Item>
 
           <Item
