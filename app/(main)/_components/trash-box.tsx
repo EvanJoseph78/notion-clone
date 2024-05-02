@@ -10,7 +10,7 @@ import React, { useState } from "react";
 import { Spinner } from "@/components/spinner";
 import { Search, Trash, Undo } from "lucide-react";
 import { Input } from "@/components/ui/input";
-import { ConfirmModal } from "./modals/confirm-modal";
+import { ConfirmModal } from "@/components/modals/confirm-modal";
 
 export const TrashBox = () => {
 

@@ -29,8 +29,10 @@ import { DocumentLit } from "./document-list";
 import { TrashBox } from "./trash-box";
 
 import { useSearch } from "@/hooks/use-search";
+import { useSettings } from "@/hooks/use-settings";
 
 export const Navigation = () => {
+  const settings = useSettings();
   const search = useSearch();
   const pathname = usePathname();
   const isMobile = useMediaQuery("(max-width: 768px)");
@@ -167,7 +169,7 @@ export const Navigation = () => {
           <Item
             label="Ajustes"
             icon={Settings}
-            onClick={() => { }}
+            onClick={settings.onOpen}
           ></Item>
 
           <Item
