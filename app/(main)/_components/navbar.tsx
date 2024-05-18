@@ -8,6 +8,7 @@ import { useParams } from "next/navigation";
 import { Title } from "./title";
 import { Banner } from "./banner";
 import { Menu } from "./menu";
+import { Publish } from "./publish";
 
 
 interface NavbarProps {
@@ -60,6 +61,7 @@ export const Navbar = ({
           <div
             className="flex items-center gap-x-2"
           >
+            <Publish initialData={document}></Publish>
             <Menu documentId={document._id}></Menu>
           </div>
         </div>
