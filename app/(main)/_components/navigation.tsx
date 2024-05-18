@@ -17,7 +17,7 @@ import {
   PopoverContent
 } from "@/components/ui/popover"
 
-import { useParams, usePathname } from "next/navigation";
+import { useParams, usePathname, useRouter } from "next/navigation";
 import { ElementRef, useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "usehooks-ts";
 import { UserItem } from "./user-item";
@@ -44,6 +44,7 @@ export const Navigation = () => {
   const navbarRef = useRef<ElementRef<"div">>(null);
   const [isResetting, setIsReseting] = useState(false);
   const [isCollapsed, setIsCollapsed] = useState(isMobile);
+  const router = useRouter();
 
   const create = useMutation(api.documents.create);
 
@@ -125,7 +126,7 @@ export const Navigation = () => {
   }
 
   const handleCreate = () => {
-    const promise = create({ title: "Sem titulo" });
+    const promise = create({ title: "Sem titulo" }).then((documentId) => router.push(`/documents/${documentId}`));
 
     toast.promise(promise, {
       loading: "Criando nova nota...",

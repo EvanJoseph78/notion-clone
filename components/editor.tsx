@@ -30,7 +30,7 @@ const isValidJSON = (str: string): boolean => {
   }
 };
 
-export const Editor = ({
+const Editor = ({
   onChange,
   initialContent,
   editable
@@ -69,3 +69,5 @@ export const Editor = ({
     </div>
   );
 };
+
+export default Editor;
