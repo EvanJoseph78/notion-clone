@@ -13,6 +13,8 @@ import { BlockNoteView } from "@blocknote/mantine";
 import "@blocknote/core/fonts/inter.css";
 import "@blocknote/mantine/style.css";
 
+import { useEdgeStore } from "@/lib/edgstore";
+
 interface EditorProps {
   onChange: (value: string) => void;
   initialContent?: string;
@@ -34,6 +36,15 @@ export const Editor = ({
   editable
 }: EditorProps) => {
   const { resolvedTheme } = useTheme();
+  const { edgestore } = useEdgeStore();
+
+  const handleUpload = async (file: File) => {
+    const response = await edgestore.publicFiles.upload({
+      file,
+    });
+
+    return response.url;
+  };
 
   let parsedContent: PartialBlock[] | undefined = undefined;
 
@@ -45,6 +56,7 @@ export const Editor = ({
 
   const editor: BlockNoteEditor = useCreateBlockNote({
     initialContent: parsedContent,
+    uploadFile: handleUpload,
   });
 
   return (
